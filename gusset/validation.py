@@ -16,7 +16,7 @@ def with_validation(func):
 
     A few caveats:
 
-    1. This decorate *MUST* be the inner most decorator because other decorators
+    1. This decorator *MUST* be the inner most decorator because other decorators
        will typically replace the declared args with *args and **kwargs.
 
     2. The decorated function must use kwargs-style values with defaults of None
