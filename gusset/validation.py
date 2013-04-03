@@ -36,9 +36,9 @@ def with_validation(func):
         argspec = getargspec(func)
         for index, arg_name in enumerate(argspec.args):
             arg_value = args[index] if index < len(args) else kwargs.get(arg_name)
-            if arg_value is not Required:
+            if arg_value is not None:
                 continue
-            if len(argspec.defaults) > index and argspec.defaults[index] is not None:
+            if len(argspec.defaults) > index and argspec.defaults[index] is not Required:
                 continue
             abort("Missing required argument: {}".format(arg_name))
         return func(*args, **kwargs)
