@@ -4,6 +4,9 @@ from fabric.api import abort
 
 
 class Required(object):
+    """
+    Marker class for required arguments.
+    """
     pass
 
 
@@ -14,31 +17,20 @@ def with_validation(func):
      -  Validates that all arguments have been specified with non-None values
      -  Aborts with helpful errors
 
-    A few caveats:
-
-    1. This decorator *MUST* be the inner most decorator because other decorators
-       will typically replace the declared args with *args and **kwargs.
-
-    2. The decorated function must use kwargs-style values with defaults of None
-       instead of arg-style values. Otherwise, Fabric will raise a barely useful
-       TypeError if the argumennt was not provided. That is, use:
-
-           def foo(bar=Required):
-               pass
-
-       Instead of:
-
-           def foo(bar):
-               pass
+    One caveat: this decorator *MUST* be the innermost decorator because other
+    decorators will typically replace the declared args with *args and **kwargs.
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
+        # get the function argspec
         argspec = getargspec(func)
+
+        defaults = (Required,) * (len(argspec.args) - len(argspec.defaults)) + argspec.defaults
         for index, arg_name in enumerate(argspec.args):
             arg_value = args[index] if index < len(args) else kwargs.get(arg_name)
             if arg_value is not None:
                 continue
-            if len(argspec.defaults) > index and argspec.defaults[index] is not Required:
+            if defaults[index] is not Required:
                 continue
             abort("Missing required argument: {}".format(arg_name))
         return func(*args, **kwargs)
