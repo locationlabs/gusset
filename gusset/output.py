@@ -21,15 +21,23 @@ def with_output(verbosity=1):
     return make_wrapper
 
 
+def _puts(message, level, **kwargs):
+    """
+    Generate fabric-style output if and only if status output
+    has been selected.
+    """
+    if not output.get(level):
+        return
+    print "[{hostname}] {message}".format(hostname=env.host_string,
+                                          message=message.format(**kwargs))
+
+
 def status(message, **kwargs):
     """
     Generate fabric-style output if and only if status output
     has been selected.
     """
-    if not output.status:
-        return
-    print "[{hostname}] {message}".format(hostname=env.host_string,
-                                          message=message.format(**kwargs))
+    _puts(message, 'status', **kwargs)
 
 
 def debug(message, **kwargs):
@@ -37,10 +45,7 @@ def debug(message, **kwargs):
     Generate fabric-style output if and only if debug output
     has been selected.
     """
-    if not output.debug:
-        return
-    print "[{hostname}] {message}".format(hostname=env.host_string,
-                                          message=message.format(**kwargs))
+    _puts(message, 'debug', **kwargs)
 
 
 def warn_via_fabric(message, category, filename, lineno=None, line=None):
