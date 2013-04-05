@@ -16,12 +16,12 @@ def with_validation(func):
 
     A few caveats:
 
-    1. This decorator *MUST* be the inner most decorator because other decorators
+    1. This decorator *MUST* be the innermost decorator because other decorators
        will typically replace the declared args with *args and **kwargs.
 
-    2. The decorated function must use kwargs-style values with defaults of None
-       instead of arg-style values. Otherwise, Fabric will raise a barely useful
-       TypeError if the argumennt was not provided. That is, use:
+    2. The decorated function must use kwargs-style values with defaults of Required
+       instead of arg-style values. Otherwise, Fabric will raise a barely-useful
+       TypeError if the argument was not provided. That is, use:
 
            def foo(bar=Required):
                pass
