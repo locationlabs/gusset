@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 __version__ = '1.0'
 
-# Jenkins will replace __build__ with a unique value.
+# To be replaced by automated build
 __build__ = ''
 
 setup(name='gusset',
