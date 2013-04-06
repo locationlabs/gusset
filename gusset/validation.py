@@ -34,7 +34,8 @@ def assert_valid_arguments(func, *args, **kwargs):
     # get the function argspec
     argspec = getargspec(func)
 
-    defaults = (Required,) * (len(argspec.args) - len(argspec.defaults)) + argspec.defaults
+    func_defaults = argspec.defaults or tuple()
+    defaults = (Required,) * (len(argspec.args) - len(func_defaults)) + func_defaults
     for index, arg_name in enumerate(argspec.args):
         arg_value = args[index] if index < len(args) else kwargs.get(arg_name)
         if arg_value is not None:
