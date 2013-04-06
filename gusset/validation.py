@@ -22,16 +22,23 @@ def with_validation(func):
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        # get the function argspec
-        argspec = getargspec(func)
-
-        defaults = (Required,) * (len(argspec.args) - len(argspec.defaults)) + argspec.defaults
-        for index, arg_name in enumerate(argspec.args):
-            arg_value = args[index] if index < len(args) else kwargs.get(arg_name)
-            if arg_value is not None:
-                continue
-            if defaults[index] is not Required:
-                continue
-            abort("Missing required argument: {}".format(arg_name))
+        assert_valid_arguments(func, *args, **kwargs)
         return func(*args, **kwargs)
     return wrapper
+
+
+def assert_valid_arguments(func, *args, **kwargs):
+    """
+    Validate provided arguments against a function's argspec.
+    """
+    # get the function argspec
+    argspec = getargspec(func)
+
+    defaults = (Required,) * (len(argspec.args) - len(argspec.defaults)) + argspec.defaults
+    for index, arg_name in enumerate(argspec.args):
+        arg_value = args[index] if index < len(args) else kwargs.get(arg_name)
+        if arg_value is not None:
+            continue
+        if defaults[index] is not Required:
+            continue
+        abort("Missing required argument: {}".format(arg_name))
