@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 # To be replaced by automated build
 __build__ = ''
@@ -18,4 +18,8 @@ setup(name='gusset',
       install_requires=[
           'Fabric>=1.4',
       ],
+      setup_requires=[
+          'nose>=1.0'
+      ],
+      test_suite='gusset.tests',
       )

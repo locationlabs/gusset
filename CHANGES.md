@@ -1,3 +1,7 @@
+Version 1.1
+
+ -  Expose validation logic as a function.
+ 
 Version 1.0
 
  -  Provides Fabric task output control decorator.
