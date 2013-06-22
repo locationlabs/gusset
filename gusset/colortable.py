@@ -22,12 +22,14 @@ class ColorRow(dict):
         """
         def format_cell(color, item):
             column, value = item
-            return color(" {}".format(value).ljust(1 + self.table.column_widths[column]))
+            width = self.table.column_widths[column]
+            return color(" {0}".format(value).ljust(1 + width))
 
         # get items in column order
         items = [(column, self[column]) for column in self.table.columns]
         # format cells with color and length
-        cells = [format_cell(color, item) for color, item in zip(cycle(self.table.colors), items)]
+        colors_and_items = zip(cycle(self.table.colors), items)
+        cells = [format_cell(color, item) for color, item in colors_and_items]
         return " ".join(cells)
 
 
@@ -35,6 +37,7 @@ class ColorTable(object):
     """
     Simple row/column table.
     """
+    DEFAULT_COLORS = [red, green, blue, magenta, white, yellow]
 
     def __init__(self, *columns, **kwargs):
         """
@@ -45,8 +48,9 @@ class ColorTable(object):
         """
         self.columns = columns
         self.sort_key = kwargs.get("sort_key")
-        self.colors = kwargs.get("colors", [red, green, blue, magenta, white, yellow])
-        self.header = ColorRow(self, **dict([(column, capwords(column)) for column in self.columns]))
+        self.colors = kwargs.get("colors", ColorTable.DEFAULT_COLORS)
+        header_cells = dict([(column, capwords(column)) for column in self.columns])
+        self.header = ColorRow(self, **header_cells)
         # initialize column widths based on header
         self.column_widths = dict([(column, len(self.header[column])) for column in self.columns])
         self.rows = []
