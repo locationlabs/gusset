@@ -1,3 +1,7 @@
+Version 1.2
+
+ -  Add color table output support.
+
 Version 1.1
 
  -  Expose validation logic as a function.
