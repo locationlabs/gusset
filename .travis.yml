@@ -1,0 +1,14 @@
+language: python
+python:
+- '2.7'
+- pypy
+install: pip install . --use-mirrors
+script: python setup.py nosetests
+deploy:
+  provider: pypi
+  user: jessemyers
+  password:
+    secure: LRDyD71Tb3KAKvdcMS1vnlcGRrQlL+qBpRLSETWwC7IrnXJxAXIze1O6z+IqIOtwms6mh6c3FkoBkXbGQ5hdgX/eH30E5jA8gcZeRQ3aT0qr3SiKEt2DYI71MjEJ17PshoQ1an9MvL/RlUXcfyv8MmPB4nNHX727khLR0ddHlKk=
+  on:
+    tags: true
+    repo: locationlabs/gusset

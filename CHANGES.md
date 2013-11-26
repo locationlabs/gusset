@@ -1,3 +1,7 @@
+Version 1.3
+
+ -  Add travis support.
+ 
 Version 1.2
 
  -  Add color table output support.
