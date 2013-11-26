@@ -2,6 +2,8 @@
 
 Small utilities for Fabric scripts.
 
+[![Build Status](https://travis-ci.org/locationlabs/gusset.png)](https://travis-ci.org/locationlabs/gusset)
+
 ## Output Control
 
 Fabric supports flexible output control, though integrating Fabric's output
