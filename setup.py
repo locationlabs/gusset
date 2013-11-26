@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 # To be replaced by automated build
 __build__ = ''
